@@ -7,6 +7,8 @@ mod eval;
 fn main() {
     let input = String::from("(10 + 20) * 2 / 3");
 
+    // TODO: add proper error handling and user input
+
     let mut tokenizer = Tokenizer::new(&input);
     let (tokens, _) = tokenizer.tokenize();
 
