@@ -1,4 +1,4 @@
-use crate::ast::nodes::Expression;
+use crate::ast::nodes::{Expression, Operator};
 
 pub trait Eval {
     fn evaluate(&self) -> i32;
@@ -16,10 +16,10 @@ impl Eval for Expression {
                 let left_val = left.as_ref().evaluate();
                 let right_val = right.as_ref().evaluate();
                 match operator {
-                    crate::ast::nodes::Operator::Plus => left_val + right_val,
-                    crate::ast::nodes::Operator::Minus => left_val - right_val,
-                    crate::ast::nodes::Operator::Multiply => left_val * right_val,
-                    crate::ast::nodes::Operator::Divide => left_val / right_val,
+                    Operator::Plus => left_val + right_val,
+                    Operator::Minus => left_val - right_val,
+                    Operator::Multiply => left_val * right_val,
+                    Operator::Divide => left_val / right_val,
                 }
             }
             Expression::Parenthesized(par) => par.as_ref().evaluate(),
