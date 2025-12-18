@@ -1,11 +1,7 @@
 use crate::ast::nodes::{Expression, Operator};
 
-pub trait Eval {
-    fn evaluate(&self) -> i32;
-}
-
-impl Eval for Expression {
-    fn evaluate(&self) -> i32 {
+impl Expression {
+    pub fn evaluate(&self) -> i32 {
         match self {
             Expression::Literal(lit) => *lit,
             Expression::Binary {
