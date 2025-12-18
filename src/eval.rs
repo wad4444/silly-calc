@@ -1,9 +1,9 @@
 use crate::ast::nodes::{Expression, Operator};
 
 impl Expression {
-    pub fn evaluate(&self) -> i32 {
+    pub fn evaluate(&self) -> f64 {
         match self {
-            Expression::Literal(lit) => *lit,
+            Expression::Literal(lit) => *lit as f64,
             Expression::Binary {
                 left,
                 operator,
