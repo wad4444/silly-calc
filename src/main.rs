@@ -1,8 +1,11 @@
-use crate::{ast::render::Render, parse::{parser::Parser, tokenizer::Tokenizer}};
+use crate::{
+    ast::render::Render,
+    parse::{parser::Parser, tokenizer::Tokenizer},
+};
 
 mod ast;
-mod parse;
 mod eval;
+mod parse;
 
 fn main() {
     let input = String::from("(10 + 20) * (2 + 5)");

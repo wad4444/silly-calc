@@ -107,7 +107,7 @@ impl Parser<'_> {
             Token::NumberLiteral(literal) => {
                 self.pos += 1;
                 Some(Expression::Literal(literal))
-            },
+            }
             Token::OpeningParenthesis => {
                 self.pos += 1;
 
@@ -138,10 +138,7 @@ impl Parser<'_> {
     fn ensure_current_tok(&mut self, expected: Token) -> bool {
         let next = self.current();
         if next.is_none() {
-            self.errors.push(ErrorKind::UnexpectedEndOfExpression {
-                expected: Some(expected),
-                index: self.pos,
-            });
+            self.unexpected_end(Some(expected));
             return false;
         }
 
