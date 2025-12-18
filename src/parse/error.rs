@@ -4,8 +4,7 @@ use crate::ast::{render::Render, tokens::Token};
 pub enum ErrorKind<'a> {
     InvalidSymbol {
         contents: &'a str,
-        start: usize,
-        end: usize,
+        pos: usize,
     },
     InvalidNumber {
         contents: &'a str,
@@ -32,16 +31,12 @@ impl Render for ErrorKind<'_> {
                 index,
             } => {
                 buf.push_str(&format!(
-                    "Error: Unexpected token '{:?}'\n at index '{index}'\nExpected '{:?}'",
+                    "Error: Unexpected token '{:?}' at index '{index}'. Expected '{:?}'",
                     got, expected
                 ));
             }
-            ErrorKind::InvalidSymbol {
-                contents,
-                start,
-                end,
-            } => buf.push_str(&format!(
-                "Tokenizing Error: Invalid symbol '{contents}'\nat positions {start}-{end}'",
+            ErrorKind::InvalidSymbol { contents, pos } => buf.push_str(&format!(
+                "Tokenizing Error: Invalid symbol '{contents}' at position '{pos}'",
             )),
             ErrorKind::InvalidNumber {
                 contents,
@@ -57,5 +52,6 @@ impl Render for ErrorKind<'_> {
                 ));
             }
         }
+        buf.push('\n');
     }
 }

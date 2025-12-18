@@ -79,8 +79,7 @@ impl<'a> Tokenizer<'a> {
                 char if char.is_whitespace() => {}
                 _ => self.errors.push(ErrorKind::InvalidSymbol {
                     contents: &self.input[self.pos..self.pos + 1],
-                    start: self.pos,
-                    end: self.pos,
+                    pos: self.pos,
                 }),
             }
             self.next();

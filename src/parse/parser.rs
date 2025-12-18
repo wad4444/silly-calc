@@ -49,7 +49,6 @@ impl Parser<'_> {
             self.pos += 1;
             let factor_expr = self.parse_term();
             if factor_expr.is_none() {
-                self.unexpected_end(None);
                 return None;
             }
 
@@ -82,7 +81,6 @@ impl Parser<'_> {
             self.pos += 1;
             let factor_expr = self.parse_factor();
             if factor_expr.is_none() {
-                self.unexpected_end(None);
                 return None;
             }
 
@@ -99,6 +97,7 @@ impl Parser<'_> {
     fn parse_factor(&mut self) -> Option<Expression> {
         let current = self.current();
         if current.is_none() {
+            self.unexpected_end(Some(Token::NumberLiteral(0)));
             return None;
         }
 
@@ -113,7 +112,6 @@ impl Parser<'_> {
 
                 let expression = self.parse_expression();
                 if expression.is_none() {
-                    self.unexpected_end(None);
                     return None;
                 }
 
@@ -158,7 +156,7 @@ impl Parser<'_> {
     fn unexpected_end(&mut self, expected: Option<Token>) {
         self.errors.push(ErrorKind::UnexpectedEndOfExpression {
             expected,
-            index: self.pos,
+            index: self.pos + 1,
         });
     }
 
@@ -166,6 +164,16 @@ impl Parser<'_> {
         self.reset();
 
         let result = self.parse_expression();
+        let next_token = self.current();
+        if next_token.is_some() {
+            self.errors.push(ErrorKind::UnexpectedToken {
+                got: *next_token.unwrap(),
+                expected: None,
+                index: self.pos + 1,
+            });
+            return (None, self.errors.to_vec());
+        }
+
         (result, self.errors.to_vec())
     }
 }
