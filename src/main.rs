@@ -8,7 +8,7 @@ mod eval;
 mod parse;
 
 fn main() {
-    let input = String::from("5 * 5 + (10 - 2) / ");
+    let input = String::from("5 * 5 + (10 - 2) / 5");
 
     // TODO: add proper error handling and user input
 
